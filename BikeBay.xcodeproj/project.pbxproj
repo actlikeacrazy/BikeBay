@@ -9,23 +9,27 @@
 /* Begin PBXBuildFile section */
 		D82CBB2F28AEBCA000D4E941 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB2E28AEBCA000D4E941 /* AppDelegate.swift */; };
 		D82CBB3128AEBCA100D4E941 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB3028AEBCA100D4E941 /* SceneDelegate.swift */; };
-		D82CBB3328AEBCA100D4E941 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB3228AEBCA100D4E941 /* ViewController.swift */; };
+		D82CBB3328AEBCA100D4E941 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */; };
 		D82CBB3628AEBCA100D4E941 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82CBB3428AEBCA100D4E941 /* Main.storyboard */; };
 		D82CBB3928AEBCA100D4E941 /* BikeBay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB3728AEBCA100D4E941 /* BikeBay.xcdatamodeld */; };
 		D82CBB3B28AEBCA100D4E941 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D82CBB3A28AEBCA100D4E941 /* Assets.xcassets */; };
 		D82CBB3E28AEBCA100D4E941 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82CBB3C28AEBCA100D4E941 /* LaunchScreen.storyboard */; };
+		D82CBB4C28B6AE6600D4E941 /* TFLClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB4B28B6AE6600D4E941 /* TFLClient.swift */; };
+		D82CBB4E28B6B1AD00D4E941 /* TFLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB4D28B6B1AD00D4E941 /* TFLResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D82CBB2B28AEBCA000D4E941 /* BikeBay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BikeBay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82CBB2E28AEBCA000D4E941 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D82CBB3028AEBCA100D4E941 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D82CBB3228AEBCA100D4E941 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		D82CBB3528AEBCA100D4E941 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D82CBB3828AEBCA100D4E941 /* BikeBay.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BikeBay.xcdatamodel; sourceTree = "<group>"; };
 		D82CBB3A28AEBCA100D4E941 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D82CBB3D28AEBCA100D4E941 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D82CBB3F28AEBCA100D4E941 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D82CBB4B28B6AE6600D4E941 /* TFLClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLClient.swift; sourceTree = "<group>"; };
+		D82CBB4D28B6B1AD00D4E941 /* TFLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,14 +64,64 @@
 			children = (
 				D82CBB2E28AEBCA000D4E941 /* AppDelegate.swift */,
 				D82CBB3028AEBCA100D4E941 /* SceneDelegate.swift */,
-				D82CBB3228AEBCA100D4E941 /* ViewController.swift */,
+				D82CBB4728AEBF0700D4E941 /* Model */,
+				D82CBB4628AEBED000D4E941 /* View */,
+				D82CBB4528AEBEB700D4E941 /* Controller */,
+				D82CBB4828AEBF2300D4E941 /* Assets */,
+				D82CBB3F28AEBCA100D4E941 /* Info.plist */,
+			);
+			path = BikeBay;
+			sourceTree = "<group>";
+		};
+		D82CBB4528AEBEB700D4E941 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D82CBB4628AEBED000D4E941 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D82CBB4728AEBF0700D4E941 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D82CBB4A28B6AE5100D4E941 /* TFL Client */,
+				D82CBB4928B6AE3300D4E941 /* Core Data */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D82CBB4828AEBF2300D4E941 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
 				D82CBB3428AEBCA100D4E941 /* Main.storyboard */,
 				D82CBB3A28AEBCA100D4E941 /* Assets.xcassets */,
 				D82CBB3C28AEBCA100D4E941 /* LaunchScreen.storyboard */,
-				D82CBB3F28AEBCA100D4E941 /* Info.plist */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		D82CBB4928B6AE3300D4E941 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
 				D82CBB3728AEBCA100D4E941 /* BikeBay.xcdatamodeld */,
 			);
-			path = BikeBay;
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		D82CBB4A28B6AE5100D4E941 /* TFL Client */ = {
+			isa = PBXGroup;
+			children = (
+				D82CBB4B28B6AE6600D4E941 /* TFLClient.swift */,
+				D82CBB4D28B6B1AD00D4E941 /* TFLResponse.swift */,
+			);
+			path = "TFL Client";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,9 +195,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82CBB3328AEBCA100D4E941 /* ViewController.swift in Sources */,
+				D82CBB3328AEBCA100D4E941 /* MainMapViewController.swift in Sources */,
+				D82CBB4E28B6B1AD00D4E941 /* TFLResponse.swift in Sources */,
 				D82CBB2F28AEBCA000D4E941 /* AppDelegate.swift in Sources */,
 				D82CBB3128AEBCA100D4E941 /* SceneDelegate.swift in Sources */,
+				D82CBB4C28B6AE6600D4E941 /* TFLClient.swift in Sources */,
 				D82CBB3928AEBCA100D4E941 /* BikeBay.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,6 +353,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -308,7 +365,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -325,6 +382,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -336,7 +394,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
