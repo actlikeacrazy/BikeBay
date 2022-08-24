@@ -10,15 +10,15 @@ import MapKit
 
 class MainMapViewController: UIViewController, MKMapViewDelegate {
     
-    //MARK: Outlets
+    // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     
     
-    //MARK: Actions
+    // MARK: Actions
     
-    //MARK: Properties
+    // MARK: Properties
     
-    //MARK: Life Cycle
+    // MARK: Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,30 +45,33 @@ class MainMapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-//    func loadSavedPins() {
-//        let pins = fetchedResultsController.fetchedObjects!
-//        // Annotations
-//        var annotations = [MKPointAnnotation]()
-//
-//        for pin in pins {
-//            // Notice that the float values are being used to create CLLocationDegree values.
-//            // This is a version of the Double type.
-//            let lat = CLLocationDegrees(pin.latitude)
-//            let long = CLLocationDegrees(pin.longitude)
-//            // The lat and long are used to create a CLLocationCoordinates2D instance.
-//            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//
-//            // Here we create the annotation and set its coordiate, title, and subtitle properties
-//            let annotation = MKPointAnnotation()
-//            annotation.coordinate = coordinate
-//            // Finally we place the annotation in an array of annotations.
-//            annotations.append(annotation)
-//        }
-//        // When the array is complete, we add the annotations to the map.
-//        print("adding annotations \(annotations)")
-//        self.mapView.addAnnotations(annotations)
-//
-//    }
+    func downloadPins() {
+       TFLClient.downloadingBikeBay(completion: handleTFLResponse(response:error:))
+        // Annotations
+        var annotations = [MKPointAnnotation]()
+        
+        for dictionary in BikeBayModel.bikeBays {
+            // Notice that the float values are being used to create CLLocationDegree values.
+            // This is a version of the Double type.
+            let lat = CLLocationDegrees(dictionary.lat)
+            let long = CLLocationDegrees(dictionary.lon)
+            // The lat and long are used to create a CLLocationCoordinates2D instance.
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+//            let first = dictionary.firstName
+//            let last = dictionary.lastName
+//            let mediaURL = dictionary.mediaURL
+            // Here we create the annotation and set its coordiate, title, and subtitle properties
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+//            annotation.title = "\(first) \(last)"
+//            annotation.subtitle = mediaURL
+            // Finally we place the annotation in an array of annotations.
+            annotations.append(annotation)
+        }
+        // When the array is complete, we add the annotations to the map.
+        print("adding annotations \(annotations)")
+        self.mapView.addAnnotations(annotations)
+    }
     
     // Delegate method to perform a segue when tapped on a pin
 //    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -81,6 +84,16 @@ class MainMapViewController: UIViewController, MKMapViewDelegate {
 //        }
 //        performSegue(withIdentifier: "presentPhotoAlbumView", sender: self)
 //    }
-
+    
+    // MARK: Helper Methods
+    
+    private func handleTFLResponse(response: TFLResponseElement?, error: Error?) {
+        guard let error = error else {
+            BikeBayModel.bikeBays = [response.unsafelyUnwrapped]
+            return
+        }
+        print(error)
+        // TODO: Show Error Message
+    }
 }
 
