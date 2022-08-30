@@ -8,21 +8,34 @@
 import UIKit
 import MapKit
 
-class MainMapViewController: UIViewController, MKMapViewDelegate {
+class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     
-    
     // MARK: Actions
     
     // MARK: Properties
+    var pin: MKAnnotation!
+    fileprivate let locationManager: CLLocationManager = CLLocationManager()
     
     // MARK: Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        mapView.showsUserLocation = true
+        downloadPins()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.startUpdatingLocation()
+        mapView.showsUserLocation = true
+        
         // Do any additional setup after loading the view.
     }
     
@@ -40,60 +53,71 @@ class MainMapViewController: UIViewController, MKMapViewDelegate {
             pinView.canShowCallout = true
             pinView.pinTintColor = .red
             pinView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            pinView.animatesDrop = true
+            pinView.animatesDrop = false
             return pinView
         }
     }
     
     func downloadPins() {
-       TFLClient.downloadingBikeBay(completion: handleTFLResponse(response:error:))
-        // Annotations
-        var annotations = [MKPointAnnotation]()
-        
-        for dictionary in BikeBayModel.bikeBays {
-            // Notice that the float values are being used to create CLLocationDegree values.
-            // This is a version of the Double type.
-            let lat = CLLocationDegrees(dictionary.lat)
-            let long = CLLocationDegrees(dictionary.lon)
-            // The lat and long are used to create a CLLocationCoordinates2D instance.
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//            let first = dictionary.firstName
-//            let last = dictionary.lastName
-//            let mediaURL = dictionary.mediaURL
-            // Here we create the annotation and set its coordiate, title, and subtitle properties
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-//            annotation.title = "\(first) \(last)"
-//            annotation.subtitle = mediaURL
-            // Finally we place the annotation in an array of annotations.
-            annotations.append(annotation)
+        TFLClient.downloadingBikeBay { response, error in
+            guard let error = error else {
+                Swift.print("downloaded locations: \(response!.count)")
+                BikeBayModel.bikeBays = response!
+                // Annotations
+                var annotations = [MKPointAnnotation]()
+                print("There are \(BikeBayModel.bikeBays.count) locations in the model")
+                for dictionary in BikeBayModel.bikeBays {
+                    // Notice that the float values are being used to create CLLocationDegree values.
+                    // This is a version of the Double type.
+                    let lat = CLLocationDegrees(dictionary.lat)
+                    let long = CLLocationDegrees(dictionary.lon)
+                    // The lat and long are used to create a CLLocationCoordinates2D instance.
+                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    // Here we create the annotation and set its coordiate, title, and subtitle properties
+                    
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate
+                    // Finally we place the annotation in an array of annotations.
+                    annotations.append(annotation)
+                }
+                // When the array is complete, we add the annotations to the map.
+                self.mapView.addAnnotations(annotations)
+                
+                return
+            }
+            Swift.print(error)
+            // TODO: Show Error Message
         }
-        // When the array is complete, we add the annotations to the map.
-        print("adding annotations \(annotations)")
-        self.mapView.addAnnotations(annotations)
+    }
+    
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "fromMapToDetail",
+        let bikeBayDetailViewController = segue.destination as? BikeBayDetailViewController else {return}
+        bikeBayDetailViewController.pin = self.pin
+        print(pin.coordinate)
     }
     
     // Delegate method to perform a segue when tapped on a pin
-//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//        for pin in fetchedResultsController.fetchedObjects! {
-//            if pin.latitude == view.annotation?.coordinate.latitude && pin.longitude == view.annotation?.coordinate.longitude {
-//                debugPrint("Pin found and assigned: \(pin)")
-//                debugPrint("With \(pin.corePhotos!.count) saved photos")
-//                self.pin = pin
-//            }
-//        }
-//        performSegue(withIdentifier: "presentPhotoAlbumView", sender: self)
-//    }
-    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        for pin in mapView.annotations {
+            if pin.coordinate.latitude == view.annotation?.coordinate.latitude && pin.coordinate.longitude == view.annotation?.coordinate.longitude {
+                self.pin = pin
+            }
+        }
+        performSegue(withIdentifier: "fromMapToDetail", sender: self)
+    }
+
     // MARK: Helper Methods
-    
-    private func handleTFLResponse(response: TFLResponseElement?, error: Error?) {
+    private func handleTFLResponse(response: TFLResponse?, error: Error?) {
         guard let error = error else {
-            BikeBayModel.bikeBays = [response.unsafelyUnwrapped]
+            print("downloaded locations: \(response!.count)")
+            BikeBayModel.bikeBays = response!
             return
         }
         print(error)
         // TODO: Show Error Message
     }
+    
 }
 

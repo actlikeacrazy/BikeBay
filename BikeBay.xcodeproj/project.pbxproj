@@ -17,6 +17,8 @@
 		D82CBB4C28B6AE6600D4E941 /* TFLClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB4B28B6AE6600D4E941 /* TFLClient.swift */; };
 		D82CBB4E28B6B1AD00D4E941 /* TFLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB4D28B6B1AD00D4E941 /* TFLResponse.swift */; };
 		D82CBB5028B6BB8B00D4E941 /* BikeBayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB4F28B6BB8B00D4E941 /* BikeBayModel.swift */; };
+		D82CBB5428BE9FF100D4E941 /* BikeBayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB5328BE9FF100D4E941 /* BikeBayDetailViewController.swift */; };
+		D82CBB5628BEAE7800D4E941 /* TFLBikePointResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB5528BEAE7800D4E941 /* TFLBikePointResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		D82CBB4B28B6AE6600D4E941 /* TFLClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLClient.swift; sourceTree = "<group>"; };
 		D82CBB4D28B6B1AD00D4E941 /* TFLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLResponse.swift; sourceTree = "<group>"; };
 		D82CBB4F28B6BB8B00D4E941 /* BikeBayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeBayModel.swift; sourceTree = "<group>"; };
+		D82CBB5328BE9FF100D4E941 /* BikeBayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeBayDetailViewController.swift; sourceTree = "<group>"; };
+		D82CBB5528BEAE7800D4E941 /* TFLBikePointResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLBikePointResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */,
+				D82CBB5328BE9FF100D4E941 /* BikeBayDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -86,6 +91,8 @@
 		D82CBB4628AEBED000D4E941 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D82CBB3428AEBCA100D4E941 /* Main.storyboard */,
+				D82CBB3C28AEBCA100D4E941 /* LaunchScreen.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -103,9 +110,7 @@
 		D82CBB4828AEBF2300D4E941 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBB3428AEBCA100D4E941 /* Main.storyboard */,
 				D82CBB3A28AEBCA100D4E941 /* Assets.xcassets */,
-				D82CBB3C28AEBCA100D4E941 /* LaunchScreen.storyboard */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 			children = (
 				D82CBB4B28B6AE6600D4E941 /* TFLClient.swift */,
 				D82CBB4D28B6B1AD00D4E941 /* TFLResponse.swift */,
+				D82CBB5528BEAE7800D4E941 /* TFLBikePointResponse.swift */,
 			);
 			path = "TFL Client";
 			sourceTree = "<group>";
@@ -205,6 +211,8 @@
 				D82CBB4C28B6AE6600D4E941 /* TFLClient.swift in Sources */,
 				D82CBB5028B6BB8B00D4E941 /* BikeBayModel.swift in Sources */,
 				D82CBB3928AEBCA100D4E941 /* BikeBay.xcdatamodeld in Sources */,
+				D82CBB5628BEAE7800D4E941 /* TFLBikePointResponse.swift in Sources */,
+				D82CBB5428BE9FF100D4E941 /* BikeBayDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,6 @@ import Foundation
 
 class BikeBayModel {
     
-    static var bikeBays = [TFLResponseElement]()
+    static var bikeBays = TFLResponse()
     
 }

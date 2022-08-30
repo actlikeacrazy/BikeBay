@@ -11,7 +11,6 @@
         <!--Item-->
         <scene sceneID="Sxj-GE-MJm">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dJR-Ah-isz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="jqc-pL-tEh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="pQI-5Q-rWu"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="j3G-kx-IGq">
@@ -22,6 +21,7 @@
                         <segue destination="sOX-Cc-vpr" kind="relationship" relationship="rootViewController" destinationCreationSelector="seeTableView" id="wq6-ES-mD5"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dJR-Ah-isz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1148" y="489"/>
         </scene>
@@ -99,26 +99,39 @@
             </objects>
             <point key="canvasLocation" x="1986.9565217391305" y="-192.1875"/>
         </scene>
-        <!--View Controller-->
+        <!--Bike Bay Detail View Controller-->
         <scene sceneID="aGY-F6-NKG">
             <objects>
-                <viewController id="ogn-hK-1fg" sceneMemberID="viewController">
+                <viewController id="ogn-hK-1fg" customClass="BikeBayDetailViewController" customModule="BikeBay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4MJ-VB-cqw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5q3-no-CjU">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="311"/>
+                            </mapView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="a7L-eA-AXw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="5q3-no-CjU" firstAttribute="trailing" secondItem="a7L-eA-AXw" secondAttribute="trailing" id="OiM-H6-WWz"/>
+                            <constraint firstItem="5q3-no-CjU" firstAttribute="top" secondItem="4MJ-VB-cqw" secondAttribute="top" id="PIa-6W-Hjl"/>
+                            <constraint firstItem="5q3-no-CjU" firstAttribute="leading" secondItem="a7L-eA-AXw" secondAttribute="leading" id="gZP-nJ-7Ly"/>
+                            <constraint firstItem="a7L-eA-AXw" firstAttribute="bottom" secondItem="5q3-no-CjU" secondAttribute="bottom" constant="502" id="hNg-ci-U8I"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="s5U-Ij-Lio"/>
+                    <connections>
+                        <outlet property="mapView" destination="5q3-no-CjU" id="3la-pI-Mbd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CW7-ZM-FeN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3107" y="115"/>
+            <point key="canvasLocation" x="3105.7971014492755" y="114.50892857142857"/>
         </scene>
         <!--Item-->
         <scene sceneID="nRA-ph-hvp">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2o9-0R-ThP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="Li4-WR-FHG" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="1v1-Ad-J2l"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zNp-mj-L0o">
@@ -129,6 +142,7 @@
                         <segue destination="TGP-1V-BFQ" kind="relationship" relationship="rootViewController" id="LGb-Yo-pag"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2o9-0R-ThP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1148" y="-191"/>
         </scene>
@@ -153,7 +167,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="esx-kZ-569"/>
+        <segue reference="mWk-CV-XjE"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

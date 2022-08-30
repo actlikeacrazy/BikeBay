@@ -64,8 +64,8 @@ class TFLClient {
           return task
       }
     
-    class func downloadingBikeBay(completion: @escaping (TFLResponseElement?,Error?) -> Void) {
-        taskForGETRequest(url: Endpoints.bikePoints.url, responseType: TFLResponseElement.self) { response, error in
+    class func downloadingBikeBay(completion: @escaping (TFLResponse?,Error?) -> Void) {
+        taskForGETRequest(url: Endpoints.bikePoints.url, responseType: TFLResponse.self) { response, error in
             if let response = response {
                 DispatchQueue.main.async {
                     completion(response, nil)
