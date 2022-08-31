@@ -8,18 +8,23 @@
 import UIKit
 import MapKit
 
-class BikeBayDetailViewController: UIViewController, MKMapViewDelegate {
+class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     
     // MARK: Properties
     var pin: MKAnnotation!
-    
+    var bikePointID: String!
+    var currentBikePoint: TFLBikePointResponse!
     
     // MARK: Actions
     
     // MARK: Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        downloadBikePointDetails()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +32,8 @@ class BikeBayDetailViewController: UIViewController, MKMapViewDelegate {
         print(pin.coordinate)
         createPinForMap(annotation: pin)
     }
+    
+    
     
     // MARK: MKMapview Delegate Methods
     // Here we create a view with a "right callout accessory view". You might choose to look into other
@@ -55,5 +62,15 @@ class BikeBayDetailViewController: UIViewController, MKMapViewDelegate {
         mapView.setRegion(region, animated: true)
     }
     
+    // MARK: Helper Methods
+    private func downloadBikePointDetails() {
+        TFLClient.downloadingBikePointDetails(id: bikePointID, completion: handleBikePointDetailsResponse(response:error:))
+    }
     
+    private func handleBikePointDetailsResponse(response: TFLBikePointResponse?, error: Error?) {
+        guard let response = response else {
+            return
+        }
+        self.currentBikePoint = response
+    }
 }

@@ -17,6 +17,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     // MARK: Properties
     var pin: MKAnnotation!
+    var selectedBikePoint: TFLResponseElement!
     fileprivate let locationManager: CLLocationManager = CLLocationManager()
     
     // MARK: Life Cycle
@@ -59,7 +60,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     func downloadPins() {
-        TFLClient.downloadingBikeBay { response, error in
+        TFLClient.downloadingBikePoints { response, error in
             guard let error = error else {
                 Swift.print("downloaded locations: \(response!.count)")
                 BikeBayModel.bikeBays = response!
@@ -93,8 +94,9 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "fromMapToDetail",
-        let bikeBayDetailViewController = segue.destination as? BikeBayDetailViewController else {return}
-        bikeBayDetailViewController.pin = self.pin
+        let bikePointDetailViewController = segue.destination as? BikePointDetailViewController else {return}
+        bikePointDetailViewController.pin = self.pin
+        bikePointDetailViewController.bikePointID = selectedBikePoint.id
         print(pin.coordinate)
     }
     
@@ -103,6 +105,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         for pin in mapView.annotations {
             if pin.coordinate.latitude == view.annotation?.coordinate.latitude && pin.coordinate.longitude == view.annotation?.coordinate.longitude {
                 self.pin = pin
+                findBikePoint(pin)
             }
         }
         performSegue(withIdentifier: "fromMapToDetail", sender: self)
@@ -117,6 +120,14 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         }
         print(error)
         // TODO: Show Error Message
+    }
+    
+    fileprivate func findBikePoint(_ pin: MKAnnotation) {
+        for bikePoint in BikeBayModel.bikeBays {
+            if bikePoint.lon == pin.coordinate.longitude && bikePoint.lat == pin.coordinate.latitude {
+                self.selectedBikePoint = bikePoint
+            }
+        }
     }
     
 }

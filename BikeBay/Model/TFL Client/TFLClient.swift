@@ -12,13 +12,17 @@ class TFLClient {
     enum Endpoints {
         
         static let base = "https://api.tfl.gov.uk/BikePoint"
+        static let bikePoint = "https://api.tfl.gov.uk/BikePoint/"
         
         case bikePoints
+        case bikePoint(String)
         
         var stringValue: String {
             switch self {
             case .bikePoints:
                 return Endpoints.base
+            case.bikePoint(let id):
+                return Endpoints.bikePoint + "\(id)"
                 
             }
         }
@@ -64,7 +68,7 @@ class TFLClient {
           return task
       }
     
-    class func downloadingBikeBay(completion: @escaping (TFLResponse?,Error?) -> Void) {
+    class func downloadingBikePoints(completion: @escaping (TFLResponse?,Error?) -> Void) {
         taskForGETRequest(url: Endpoints.bikePoints.url, responseType: TFLResponse.self) { response, error in
             if let response = response {
                 DispatchQueue.main.async {
@@ -75,4 +79,18 @@ class TFLClient {
             }
         }
     }
+    
+    class func downloadingBikePointDetails(id: String, completion: @escaping (TFLBikePointResponse?,Error?) -> Void) {
+        taskForGETRequest(url: Endpoints.bikePoint(id).url, responseType: TFLBikePointResponse.self) { response, error in
+            if let response = response {
+                DispatchQueue.main.async {
+                    completion(response, nil)
+                }
+            } else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    
 }
