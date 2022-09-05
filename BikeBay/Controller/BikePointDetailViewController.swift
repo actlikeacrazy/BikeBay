@@ -13,9 +13,9 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     
+    
     // MARK: Properties
     var pin: MKAnnotation!
-    var bikePointID: String!
     var currentBikePoint: TFLBikePointResponse!
     
     // MARK: Actions
@@ -23,7 +23,7 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     // MARK: Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
-        downloadBikePointDetails()
+ 
     }
 
     override func viewDidLoad() {
@@ -33,9 +33,10 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
         createPinForMap(annotation: pin)
     }
     
+    // MARK: Helper Methods
+   
     
-    
-    // MARK: MKMapview Delegate Methods
+    // MARK: - MKMapview Delegate Methods
     // Here we create a view with a "right callout accessory view". You might choose to look into other
     // decoration alternatives.
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -61,16 +62,26 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
         let region = MKCoordinateRegion(center: annotation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         mapView.setRegion(region, animated: true)
     }
+}
+
+    // MARK: - CollectionView Delegate Methods
+extension BikePointDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    // MARK: Helper Methods
-    private func downloadBikePointDetails() {
-        TFLClient.downloadingBikePointDetails(id: bikePointID, completion: handleBikePointDetailsResponse(response:error:))
-    }
-    
-    private func handleBikePointDetailsResponse(response: TFLBikePointResponse?, error: Error?) {
-        guard let response = response else {
-            return
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var count = 2
+        for property in currentBikePoint.additionalProperties {
+            if property.key == "NbDocks" {
+                count = try! Int(property.value, format: .number)
+                print("There are \(property.value) bike bays")
+            }
         }
-        self.currentBikePoint = response
+        return count
     }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BikeCell.defaultReuseIdentifier, for: indexPath) as! BikeCell
+        
+        return cell
+    }
+    
 }

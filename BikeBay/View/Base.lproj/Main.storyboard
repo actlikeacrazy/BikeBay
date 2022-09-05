@@ -3,16 +3,21 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Favourites-->
         <scene sceneID="Sxj-GE-MJm">
             <objects>
                 <navigationController id="jqc-pL-tEh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="pQI-5Q-rWu"/>
+                    <tabBarItem key="tabBarItem" title="Favourites" id="pQI-5Q-rWu">
+                        <imageReference key="image" image="star" catalog="system" symbolScale="large"/>
+                        <imageReference key="selectedImage" image="star.fill" catalog="system" symbolScale="large"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="j3G-kx-IGq">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -67,7 +72,7 @@
             </objects>
             <point key="canvasLocation" x="1987" y="489"/>
         </scene>
-        <!--Item 1-->
+        <!--Map View-->
         <scene sceneID="3VJ-Yp-AGq">
             <objects>
                 <viewController id="TGP-1V-BFQ" customClass="MainMapViewController" customModule="BikeBay" customModuleProvider="target" sceneMemberID="viewController">
@@ -88,7 +93,9 @@
                             <constraint firstItem="eBZ-Vf-Q5g" firstAttribute="leading" secondItem="qHH-fI-Ap1" secondAttribute="leading" id="k3G-hq-yao"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="PoM-1v-PFM"/>
+                    <tabBarItem key="tabBarItem" title="Map View" selectedImage="map.fill" catalog="system" id="PoM-1v-PFM">
+                        <imageReference key="image" image="map" catalog="system" symbolScale="large"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="LCO-Eb-1Ff"/>
                     <connections>
                         <outlet property="mapView" destination="eBZ-Vf-Q5g" id="vKD-Uy-ES0"/>
@@ -99,10 +106,10 @@
             </objects>
             <point key="canvasLocation" x="1986.9565217391305" y="-192.1875"/>
         </scene>
-        <!--Bike Bay Detail View Controller-->
+        <!--BikePointDetailViewController-->
         <scene sceneID="aGY-F6-NKG">
             <objects>
-                <viewController id="ogn-hK-1fg" customClass="BikeBayDetailViewController" customModule="BikeBay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ogn-hK-1fg" userLabel="BikePointDetailViewController" customClass="BikePointDetailViewController" customModule="BikeBay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4MJ-VB-cqw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -110,30 +117,60 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5q3-no-CjU">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="311"/>
                             </mapView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6uN-fB-r4E">
+                                <rect key="frame" x="20" y="319" width="374" height="494"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2KZ-Hh-Gb6">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BikeCell" id="PHa-UG-fbh" customClass="BikeCell" customModule="BikeBay" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="SRI-Tv-e2T">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="ogn-hK-1fg" id="WPL-c6-DBg"/>
+                                    <outlet property="delegate" destination="ogn-hK-1fg" id="IRk-DE-Z9A"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="a7L-eA-AXw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6uN-fB-r4E" firstAttribute="leading" secondItem="a7L-eA-AXw" secondAttribute="leading" constant="20" id="6ft-2v-kqM"/>
                             <constraint firstItem="5q3-no-CjU" firstAttribute="trailing" secondItem="a7L-eA-AXw" secondAttribute="trailing" id="OiM-H6-WWz"/>
                             <constraint firstItem="5q3-no-CjU" firstAttribute="top" secondItem="4MJ-VB-cqw" secondAttribute="top" id="PIa-6W-Hjl"/>
+                            <constraint firstItem="a7L-eA-AXw" firstAttribute="trailing" secondItem="6uN-fB-r4E" secondAttribute="trailing" constant="20" id="XtH-bb-v6V"/>
                             <constraint firstItem="5q3-no-CjU" firstAttribute="leading" secondItem="a7L-eA-AXw" secondAttribute="leading" id="gZP-nJ-7Ly"/>
+                            <constraint firstItem="6uN-fB-r4E" firstAttribute="bottom" secondItem="a7L-eA-AXw" secondAttribute="bottom" id="gyS-U0-ecd"/>
                             <constraint firstItem="a7L-eA-AXw" firstAttribute="bottom" secondItem="5q3-no-CjU" secondAttribute="bottom" constant="502" id="hNg-ci-U8I"/>
+                            <constraint firstItem="6uN-fB-r4E" firstAttribute="top" secondItem="5q3-no-CjU" secondAttribute="bottom" constant="8" symbolic="YES" id="lfj-SC-z13"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="s5U-Ij-Lio"/>
                     <connections>
-                        <outlet property="mapView" destination="5q3-no-CjU" id="3la-pI-Mbd"/>
+                        <outlet property="mapView" destination="5q3-no-CjU" id="Tbu-z2-Fd8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CW7-ZM-FeN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3105.7971014492755" y="114.50892857142857"/>
         </scene>
-        <!--Item-->
+        <!--Map View-->
         <scene sceneID="nRA-ph-hvp">
             <objects>
                 <navigationController id="Li4-WR-FHG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="1v1-Ad-J2l"/>
+                    <tabBarItem key="tabBarItem" title="Map View" image="map" catalog="system" id="1v1-Ad-J2l">
+                        <imageReference key="selectedImage" image="map.fill" catalog="system" symbolScale="large"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zNp-mj-L0o">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -155,6 +192,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <tabBarAppearance key="standardAppearance" backgroundEffect="regular"/>
                     </tabBar>
                     <connections>
                         <segue destination="Li4-WR-FHG" kind="relationship" relationship="viewControllers" id="iWe-qb-c1F"/>
@@ -170,6 +208,10 @@
         <segue reference="mWk-CV-XjE"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="map" catalog="system" width="128" height="110"/>
+        <image name="map.fill" catalog="system" width="128" height="110"/>
+        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

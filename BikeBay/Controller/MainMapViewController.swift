@@ -17,7 +17,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     // MARK: Properties
     var pin: MKAnnotation!
-    var selectedBikePoint: TFLResponseElement!
+    var selectedBikePoint: TFLBikePointResponse!
     fileprivate let locationManager: CLLocationManager = CLLocationManager()
     
     // MARK: Life Cycle
@@ -96,16 +96,16 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         guard segue.identifier == "fromMapToDetail",
         let bikePointDetailViewController = segue.destination as? BikePointDetailViewController else {return}
         bikePointDetailViewController.pin = self.pin
-        bikePointDetailViewController.bikePointID = selectedBikePoint.id
-        print(pin.coordinate)
+        bikePointDetailViewController.currentBikePoint = selectedBikePoint
+        print("Selected bike point: \(selectedBikePoint.id)")
     }
     
     // Delegate method to perform a segue when tapped on a pin
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         for pin in mapView.annotations {
             if pin.coordinate.latitude == view.annotation?.coordinate.latitude && pin.coordinate.longitude == view.annotation?.coordinate.longitude {
-                self.pin = pin
                 findBikePoint(pin)
+                self.pin = pin
             }
         }
         performSegue(withIdentifier: "fromMapToDetail", sender: self)
@@ -125,9 +125,17 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     fileprivate func findBikePoint(_ pin: MKAnnotation) {
         for bikePoint in BikeBayModel.bikeBays {
             if bikePoint.lon == pin.coordinate.longitude && bikePoint.lat == pin.coordinate.latitude {
-                self.selectedBikePoint = bikePoint
+                selectedBikePoint = TFLBikePointResponse(type: bikePoint.type, id: bikePoint.id, url: bikePoint.url, commonName: bikePoint.commonName, placeType: bikePoint.placeType, additionalProperties: bikePoint.additionalProperties, children: bikePoint.children, lat: bikePoint.lat, lon: bikePoint.lon)
             }
         }
+    }
+    
+    private func handleBikePointDetailsResponse(response: TFLBikePointResponse?, error: Error?) {
+        guard let response = response else {
+            print("Selected Bike Point: \(response?.id ?? "nothing")")
+            return
+        }
+        selectedBikePoint = response
     }
     
 }
