@@ -130,13 +130,5 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         }
     }
     
-    private func handleBikePointDetailsResponse(response: TFLBikePointResponse?, error: Error?) {
-        guard let response = response else {
-            print("Selected Bike Point: \(response?.id ?? "nothing")")
-            return
-        }
-        selectedBikePoint = response
-    }
-    
 }
 

@@ -12,6 +12,7 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     
     // MARK: Properties
@@ -23,7 +24,10 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     // MARK: Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
- 
+        flowLayout.minimumLineSpacing = 5
+        flowLayout.sectionHeadersPinToVisibleBounds = false
+        flowLayout.itemSize = CGSize(width: 60, height: 60)
+        
     }
 
     override func viewDidLoad() {
@@ -80,8 +84,18 @@ extension BikePointDetailViewController: UICollectionViewDataSource, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BikeCell.defaultReuseIdentifier, for: indexPath) as! BikeCell
-        
+        cell.imageView.image = UIImage(named: "santanderCycle")
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? CollectionViewHeader {
+            sectionHeader.headerLabel.text = "\(currentBikePoint.commonName)"
+            sectionHeader.subHeader.text = "14 bikes available out of 24 bays"
+            return sectionHeader
+        }
+        return UICollectionReusableView()
     }
     
 }

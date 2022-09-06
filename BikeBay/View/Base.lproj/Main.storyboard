@@ -120,22 +120,73 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6uN-fB-r4E">
                                 <rect key="frame" x="20" y="319" width="374" height="494"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2KZ-Hh-Gb6">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SBp-uq-rXS">
                                     <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="74"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BikeCell" id="PHa-UG-fbh" customClass="BikeCell" customModule="BikeBay" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="0.0" y="74" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="SRI-Tv-e2T">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QRt-cY-zHM">
+                                                    <rect key="frame" x="8" y="8" width="112" height="112"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="NFw-E8-9fY"/>
+                                                        <constraint firstAttribute="width" constant="40" id="XLs-Eg-2wt"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="QRt-cY-zHM" secondAttribute="trailing" id="3Xc-gL-T94"/>
+                                                <constraint firstItem="QRt-cY-zHM" firstAttribute="top" secondItem="SRI-Tv-e2T" secondAttribute="topMargin" id="81r-7m-mfA"/>
+                                                <constraint firstItem="QRt-cY-zHM" firstAttribute="leading" secondItem="SRI-Tv-e2T" secondAttribute="leadingMargin" id="PPa-Q8-8tB"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="QRt-cY-zHM" secondAttribute="bottom" id="ib9-Xp-Dio"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageView" destination="QRt-cY-zHM" id="gyt-hd-g9t"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="header" id="Toy-vj-6Ww" customClass="CollectionViewHeader" customModule="BikeBay" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="74"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="4sb-D2-USw">
+                                            <rect key="frame" x="8" y="8" width="358" height="58"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQa-DA-Tk2">
+                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="28.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCw-CS-Heq" userLabel="SubHeader">
+                                                    <rect key="frame" x="0.0" y="29.5" width="41.5" height="28.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="4sb-D2-USw" secondAttribute="trailing" id="53F-je-g1J"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="4sb-D2-USw" secondAttribute="bottom" id="S92-Y5-FRQ"/>
+                                        <constraint firstItem="4sb-D2-USw" firstAttribute="leading" secondItem="Toy-vj-6Ww" secondAttribute="leadingMargin" id="bej-s3-j4c"/>
+                                        <constraint firstItem="4sb-D2-USw" firstAttribute="top" secondItem="Toy-vj-6Ww" secondAttribute="topMargin" id="q9r-XR-RyY"/>
+                                    </constraints>
+                                    <connections>
+                                        <outlet property="headerLabel" destination="gQa-DA-Tk2" id="npz-Xj-N0M"/>
+                                        <outlet property="subHeader" destination="TCw-CS-Heq" id="Eyd-Cj-zkY"/>
+                                    </connections>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="ogn-hK-1fg" id="WPL-c6-DBg"/>
                                     <outlet property="delegate" destination="ogn-hK-1fg" id="IRk-DE-Z9A"/>
@@ -157,6 +208,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="s5U-Ij-Lio"/>
                     <connections>
+                        <outlet property="flowLayout" destination="SBp-uq-rXS" id="2QW-iJ-ZXz"/>
                         <outlet property="mapView" destination="5q3-no-CjU" id="Tbu-z2-Fd8"/>
                     </connections>
                 </viewController>
