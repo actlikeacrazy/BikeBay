@@ -25,7 +25,11 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     override func viewWillAppear(_ animated: Bool) {
         mapView.showsUserLocation = true
         downloadPins()
+        tabBarSetUp()
+        
     }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +44,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         // Do any additional setup after loading the view.
     }
     
-    // MARK: MKMapview Delegate Methods
+    // MARK: - MKMapview Delegate Methods
     // Here we create a view with a "right callout accessory view". You might choose to look into other
     // decoration alternatives. Notice the similarity between this method and the cellForRowAtIndexPath
     // method in TableViewDataSource.
@@ -91,7 +95,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         }
     }
     
-    // MARK: Navigation
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "fromMapToDetail",
         let bikePointDetailViewController = segue.destination as? BikePointDetailViewController else {return}
@@ -128,6 +132,17 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 selectedBikePoint = TFLBikePointResponse(type: bikePoint.type, id: bikePoint.id, url: bikePoint.url, commonName: bikePoint.commonName, placeType: bikePoint.placeType, additionalProperties: bikePoint.additionalProperties, children: bikePoint.children, lat: bikePoint.lat, lon: bikePoint.lon)
             }
         }
+    }
+    
+    func tabBarSetUp() {
+        self.tabBarController?.tabBar.isTranslucent = true
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = self.tabBarController?.tabBar.bounds ?? CGRect(x: 0, y: 0, width: 0, height: 0)
+        blurView.autoresizingMask = .flexibleWidth
+        self.tabBarController?.tabBar.insertSubview(blurView, at: 0)
+        self.edgesForExtendedLayout = .bottom
+        self.extendedLayoutIncludesOpaqueBars = true
     }
     
 }

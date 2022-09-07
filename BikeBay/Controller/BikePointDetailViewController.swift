@@ -25,9 +25,9 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         flowLayout.minimumLineSpacing = 5
-        flowLayout.sectionHeadersPinToVisibleBounds = false
+        flowLayout.sectionHeadersPinToVisibleBounds = true
         flowLayout.itemSize = CGSize(width: 60, height: 60)
-        
+
     }
 
     override func viewDidLoad() {
@@ -36,9 +36,6 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
         print(pin.coordinate)
         createPinForMap(annotation: pin)
     }
-    
-    // MARK: Helper Methods
-   
     
     // MARK: - MKMapview Delegate Methods
     // Here we create a view with a "right callout accessory view". You might choose to look into other
@@ -72,27 +69,24 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
 extension BikePointDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var count = 2
-        for property in currentBikePoint.additionalProperties {
-            if property.key == "NbDocks" {
-                count = try! Int(property.value, format: .number)
-                print("There are \(property.value) bike bays")
-            }
-        }
-        return count
+        return numberOfBays()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BikeCell.defaultReuseIdentifier, for: indexPath) as! BikeCell
-        cell.imageView.image = UIImage(named: "santanderCycle")
+        switch indexPath.item < numberOfBikes() {
+        case true:
+            cell.imageView.image = UIImage(named: "santanderCycle")
+        case false:
+            cell.imageView.image = UIImage(systemName: "square.dashed")
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
         if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? CollectionViewHeader {
             sectionHeader.headerLabel.text = "\(currentBikePoint.commonName)"
-            sectionHeader.subHeader.text = "14 bikes available out of 24 bays"
+            sectionHeader.subHeader.text = "\(numberOfBikes()) bikes available out of \(numberOfBays()) bays"
             return sectionHeader
         }
         return UICollectionReusableView()

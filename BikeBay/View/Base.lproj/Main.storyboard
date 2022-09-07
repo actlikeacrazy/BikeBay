@@ -88,7 +88,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="qHH-fI-Ap1" firstAttribute="trailing" secondItem="eBZ-Vf-Q5g" secondAttribute="trailing" id="a0H-qD-4dW"/>
-                            <constraint firstItem="qHH-fI-Ap1" firstAttribute="bottom" secondItem="eBZ-Vf-Q5g" secondAttribute="bottom" constant="-83" id="fZg-72-8pH"/>
+                            <constraint firstItem="qHH-fI-Ap1" firstAttribute="bottom" secondItem="eBZ-Vf-Q5g" secondAttribute="bottom" constant="-132" id="fZg-72-8pH"/>
                             <constraint firstItem="eBZ-Vf-Q5g" firstAttribute="top" secondItem="qHH-fI-Ap1" secondAttribute="top" constant="-88" id="gdF-TG-GnQ"/>
                             <constraint firstItem="eBZ-Vf-Q5g" firstAttribute="leading" secondItem="qHH-fI-Ap1" secondAttribute="leading" id="k3G-hq-yao"/>
                         </constraints>
@@ -115,10 +115,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5q3-no-CjU">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="311"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="262"/>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6uN-fB-r4E">
-                                <rect key="frame" x="20" y="319" width="374" height="494"/>
+                                <rect key="frame" x="20" y="270" width="374" height="626"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SBp-uq-rXS">
                                     <size key="itemSize" width="128" height="128"/>
@@ -201,7 +201,7 @@
                             <constraint firstItem="5q3-no-CjU" firstAttribute="top" secondItem="4MJ-VB-cqw" secondAttribute="top" id="PIa-6W-Hjl"/>
                             <constraint firstItem="a7L-eA-AXw" firstAttribute="trailing" secondItem="6uN-fB-r4E" secondAttribute="trailing" constant="20" id="XtH-bb-v6V"/>
                             <constraint firstItem="5q3-no-CjU" firstAttribute="leading" secondItem="a7L-eA-AXw" secondAttribute="leading" id="gZP-nJ-7Ly"/>
-                            <constraint firstItem="6uN-fB-r4E" firstAttribute="bottom" secondItem="a7L-eA-AXw" secondAttribute="bottom" id="gyS-U0-ecd"/>
+                            <constraint firstItem="6uN-fB-r4E" firstAttribute="bottom" secondItem="a7L-eA-AXw" secondAttribute="bottom" constant="132" id="gyS-U0-ecd"/>
                             <constraint firstItem="a7L-eA-AXw" firstAttribute="bottom" secondItem="5q3-no-CjU" secondAttribute="bottom" constant="502" id="hNg-ci-U8I"/>
                             <constraint firstItem="6uN-fB-r4E" firstAttribute="top" secondItem="5q3-no-CjU" secondAttribute="bottom" constant="8" symbolic="YES" id="lfj-SC-z13"/>
                         </constraints>
@@ -219,7 +219,7 @@
         <!--Map View-->
         <scene sceneID="nRA-ph-hvp">
             <objects>
-                <navigationController id="Li4-WR-FHG" sceneMemberID="viewController">
+                <navigationController toolbarHidden="NO" id="Li4-WR-FHG" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map View" image="map" catalog="system" id="1v1-Ad-J2l">
                         <imageReference key="selectedImage" image="map.fill" catalog="system" symbolScale="large"/>
                     </tabBarItem>
@@ -238,13 +238,14 @@
         <!--Tab Bar Controller-->
         <scene sceneID="x5h-eC-8Ax">
             <objects>
-                <tabBarController extendedLayoutIncludesOpaqueBars="YES" id="vKu-WX-eEP" sceneMemberID="viewController">
+                <tabBarController id="vKu-WX-eEP" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OXO-Pw-nxH">
+                    <tabBar key="tabBar" opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OXO-Pw-nxH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <tabBarAppearance key="standardAppearance" backgroundEffect="regular"/>
+                        <tabBarAppearance key="standardAppearance" backgroundEffect="systemThickMaterial"/>
                     </tabBar>
                     <connections>
                         <segue destination="Li4-WR-FHG" kind="relationship" relationship="viewControllers" id="iWe-qb-c1F"/>

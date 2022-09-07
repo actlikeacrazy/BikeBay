@@ -20,6 +20,7 @@
 		D82CBB5428BE9FF100D4E941 /* BikePointDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB5328BE9FF100D4E941 /* BikePointDetailViewController.swift */; };
 		D82CBB5628BEAE7800D4E941 /* TFLBikePointResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB5528BEAE7800D4E941 /* TFLBikePointResponse.swift */; };
 		D830425628C73A0200D32A99 /* CollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D830425528C73A0200D32A99 /* CollectionViewHeader.swift */; };
+		D830425828C7E0D700D32A99 /* BikePointDetailViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D830425728C7E0D700D32A99 /* BikePointDetailViewController+Extension.swift */; };
 		D8A6977928BFF768007E5BF8 /* BikeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6977828BFF768007E5BF8 /* BikeCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		D82CBB5328BE9FF100D4E941 /* BikePointDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikePointDetailViewController.swift; sourceTree = "<group>"; };
 		D82CBB5528BEAE7800D4E941 /* TFLBikePointResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFLBikePointResponse.swift; sourceTree = "<group>"; };
 		D830425528C73A0200D32A99 /* CollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeader.swift; sourceTree = "<group>"; };
+		D830425728C7E0D700D32A99 /* BikePointDetailViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BikePointDetailViewController+Extension.swift"; sourceTree = "<group>"; };
 		D8A6977828BFF768007E5BF8 /* BikeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +90,7 @@
 			children = (
 				D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */,
 				D82CBB5328BE9FF100D4E941 /* BikePointDetailViewController.swift */,
+				D830425728C7E0D700D32A99 /* BikePointDetailViewController+Extension.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				D82CBB3928AEBCA100D4E941 /* BikeBay.xcdatamodeld in Sources */,
 				D82CBB5628BEAE7800D4E941 /* TFLBikePointResponse.swift in Sources */,
 				D82CBB5428BE9FF100D4E941 /* BikePointDetailViewController.swift in Sources */,
+				D830425828C7E0D700D32A99 /* BikePointDetailViewController+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
