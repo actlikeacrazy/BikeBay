@@ -17,7 +17,7 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Properties
     var pin: MKAnnotation!
-    var currentBikePoint: TFLBikePointResponse!
+    var currentBikePoint: BikeBay!
     
     // MARK: Actions
     
@@ -57,7 +57,6 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     
     func createPinForMap(annotation: MKAnnotation) {
         mapView.removeAnnotations(mapView.annotations)
-        
         mapView.addAnnotation(annotation)
         mapView.setCenter(annotation.coordinate, animated: true)
         let region = MKCoordinateRegion(center: annotation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
@@ -69,12 +68,12 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
 extension BikePointDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfBays()
+        return currentBikePoint.numberOfBays
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BikeCell.defaultReuseIdentifier, for: indexPath) as! BikeCell
-        switch indexPath.item < numberOfBikes() {
+        switch indexPath.item < currentBikePoint.numberOfBikes {
         case true:
             cell.imageView.image = UIImage(named: "santanderCycle")
         case false:
@@ -86,7 +85,7 @@ extension BikePointDetailViewController: UICollectionViewDataSource, UICollectio
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? CollectionViewHeader {
             sectionHeader.headerLabel.text = "\(currentBikePoint.commonName)"
-            sectionHeader.subHeader.text = "\(numberOfBikes()) bikes available out of \(numberOfBays()) bays"
+            sectionHeader.subHeader.text = "\(currentBikePoint.numberOfBikes) bikes available out of \(currentBikePoint.numberOfBays) bays"
             return sectionHeader
         }
         return UICollectionReusableView()

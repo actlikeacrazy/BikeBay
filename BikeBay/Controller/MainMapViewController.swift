@@ -17,30 +17,20 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     // MARK: Properties
     var pin: MKAnnotation!
-    var selectedBikePoint: TFLBikePointResponse!
-    fileprivate let locationManager: CLLocationManager = CLLocationManager()
+    var selectedBikePoint: BikeBay!
     
     // MARK: Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
-        mapView.showsUserLocation = true
+        self.mapView.showsUserLocation = true
         downloadPins()
         tabBarSetUp()
-        
+        mapView.setUserTrackingMode(.follow, animated: true)
     }
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.startUpdatingLocation()
-        mapView.showsUserLocation = true
-        
         // Do any additional setup after loading the view.
     }
     
@@ -50,6 +40,9 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     // method in TableViewDataSource.
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
+        if annotation is MKUserLocation {
+               return nil
+           }
         if let pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView {
             pinView.annotation = annotation
             return pinView
@@ -67,7 +60,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         TFLClient.downloadingBikePoints { response, error in
             guard let error = error else {
                 Swift.print("downloaded locations: \(response!.count)")
-                BikeBayModel.bikeBays = response!
+                BikeBayModel.feedTheModel(response)
                 // Annotations
                 var annotations = [MKPointAnnotation]()
                 print("There are \(BikeBayModel.bikeBays.count) locations in the model")
@@ -106,20 +99,25 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     // Delegate method to perform a segue when tapped on a pin
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        for pin in mapView.annotations {
-            if pin.coordinate.latitude == view.annotation?.coordinate.latitude && pin.coordinate.longitude == view.annotation?.coordinate.longitude {
-                findBikePoint(pin)
-                self.pin = pin
+        self.mapView.setUserTrackingMode(.none, animated: true)
+        if view.annotation is MKUserLocation {
+            
+        } else {
+            for pin in mapView.annotations {
+                if pin.coordinate.latitude == view.annotation?.coordinate.latitude && pin.coordinate.longitude == view.annotation?.coordinate.longitude {
+                    findBikePoint(pin)
+                    self.pin = pin
+                }
             }
+            performSegue(withIdentifier: "fromMapToDetail", sender: self)
         }
-        performSegue(withIdentifier: "fromMapToDetail", sender: self)
     }
 
     // MARK: Helper Methods
     private func handleTFLResponse(response: TFLResponse?, error: Error?) {
         guard let error = error else {
             print("downloaded locations: \(response!.count)")
-            BikeBayModel.bikeBays = response!
+            BikeBayModel.feedTheModel(response)
             return
         }
         print(error)
@@ -129,7 +127,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     fileprivate func findBikePoint(_ pin: MKAnnotation) {
         for bikePoint in BikeBayModel.bikeBays {
             if bikePoint.lon == pin.coordinate.longitude && bikePoint.lat == pin.coordinate.latitude {
-                selectedBikePoint = TFLBikePointResponse(type: bikePoint.type, id: bikePoint.id, url: bikePoint.url, commonName: bikePoint.commonName, placeType: bikePoint.placeType, additionalProperties: bikePoint.additionalProperties, children: bikePoint.children, lat: bikePoint.lat, lon: bikePoint.lon)
+                selectedBikePoint = bikePoint
             }
         }
     }

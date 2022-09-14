@@ -16,7 +16,7 @@ class CollectionViewHeader: UICollectionReusableView {
     
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        self.layer.cornerRadius = 14.0
+        self.layer.cornerRadius = 8.0
         let blurEffect = UIBlurEffect(style: .regular)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = self.layer.bounds
