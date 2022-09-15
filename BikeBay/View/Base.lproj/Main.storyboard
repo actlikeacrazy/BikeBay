@@ -31,7 +31,7 @@
             </objects>
             <point key="canvasLocation" x="1148" y="489"/>
         </scene>
-        <!--Favourite Bike Stations-->
+        <!--Favourited Bike Stations-->
         <scene sceneID="h6b-ZK-HXA">
             <objects>
                 <viewController id="sOX-Cc-vpr" customClass="FavouriteListViewController" customModule="BikeBay" customModuleProvider="target" sceneMemberID="viewController">
@@ -44,21 +44,21 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableListCell" textLabel="I8U-dA-is6" detailTextLabel="0X4-TN-yXd" style="IBUITableViewCellStyleSubtitle" id="25s-fK-k3K" customClass="TabelListCell" customModule="BikeBay" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="50" width="390" height="63.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="25s-fK-k3K" id="qer-98-vRx">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="63.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="I8U-dA-is6">
-                                                    <rect key="frame" x="20" y="5" width="35" height="20.333333333333332"/>
+                                                    <rect key="frame" x="19.999999999999996" y="12.333333333333336" width="37.666666666666664" height="24"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0X4-TN-yXd">
-                                                    <rect key="frame" x="19.999999999999996" y="25.333333333333332" width="32.666666666666664" height="14.333333333333334"/>
+                                                    <rect key="frame" x="19.999999999999996" y="37" width="32.666666666666664" height="14.333333333333334"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                                     <nil key="textColor"/>
@@ -88,7 +88,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="P9A-DV-bnh"/>
-                    <navigationItem key="navigationItem" title="Favourite Bike Stations" largeTitleDisplayMode="always" id="TaU-Jp-bpp"/>
+                    <navigationItem key="navigationItem" title="Favourited Bike Stations" largeTitleDisplayMode="always" id="TaU-Jp-bpp"/>
                     <connections>
                         <segue destination="ogn-hK-1fg" kind="show" identifier="fromTableToDetail" id="esx-kZ-569"/>
                     </connections>
@@ -231,15 +231,26 @@
                             <constraint firstItem="6uN-fB-r4E" firstAttribute="top" secondItem="5q3-no-CjU" secondAttribute="bottom" constant="8" symbolic="YES" id="lfj-SC-z13"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="s5U-Ij-Lio"/>
+                    <navigationItem key="navigationItem" id="s5U-Ij-Lio">
+                        <barButtonItem key="rightBarButtonItem" id="gRk-yn-FHl">
+                            <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Subscribed" id="Mu4-1M-ES0">
+                                <rect key="frame" x="323" y="6.6666666666666679" width="51" height="31.000000000000004"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="switchPressed:" destination="ogn-hK-1fg" eventType="valueChanged" id="oZu-x3-quv"/>
+                                </connections>
+                            </switch>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="favourite" destination="Mu4-1M-ES0" id="yt2-TY-cYl"/>
                         <outlet property="flowLayout" destination="SBp-uq-rXS" id="2QW-iJ-ZXz"/>
                         <outlet property="mapView" destination="5q3-no-CjU" id="Tbu-z2-Fd8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CW7-ZM-FeN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3105.7971014492755" y="114.50892857142857"/>
+            <point key="canvasLocation" x="3103.0769230769229" y="114.45497630331754"/>
         </scene>
         <!--Map View-->
         <scene sceneID="nRA-ph-hvp">

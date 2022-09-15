@@ -7,8 +7,9 @@
 
 import UIKit
 import MapKit
+import CoreData
 
-class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, NSFetchedResultsControllerDelegate {
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -19,6 +20,27 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     var pin: MKAnnotation!
     var selectedBikePoint: BikeBay!
     
+    // MARK: Data Controller set up 
+    var dataController:DataController!
+    
+    var fetchedResultsController:NSFetchedResultsController<BikeBay>!
+    
+    fileprivate func setupFetchedResultsController() {
+        let fetchRequest:NSFetchRequest<BikeBay> = BikeBay.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "bikebays")
+        fetchedResultsController.delegate = self
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("The fetch could not be performed: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    
     // MARK: Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -26,12 +48,18 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         downloadPins()
         tabBarSetUp()
         mapView.setUserTrackingMode(.follow, animated: true)
+        setupFetchedResultsController()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        fetchedResultsController = nil
     }
     
     // MARK: - MKMapview Delegate Methods
@@ -59,12 +87,13 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     func downloadPins() {
         TFLClient.downloadingBikePoints { response, error in
             guard let error = error else {
-                Swift.print("downloaded locations: \(response!.count)")
-                BikeBayModel.feedTheModel(response)
+                print("downloaded locations: \(response!.count)")
+                self.dataController.batchInsertTFLData(response!)
+                
                 // Annotations
                 var annotations = [MKPointAnnotation]()
-                print("There are \(BikeBayModel.bikeBays.count) locations in the model")
-                for dictionary in BikeBayModel.bikeBays {
+                //print("There are \(BikeBayModel.bikeBays.count) locations in the model")
+                for dictionary in self.fetchedResultsController.fetchedObjects! {
                     // Notice that the float values are being used to create CLLocationDegree values.
                     // This is a version of the Double type.
                     let lat = CLLocationDegrees(dictionary.lat)
@@ -72,7 +101,6 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                     // The lat and long are used to create a CLLocationCoordinates2D instance.
                     let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
                     // Here we create the annotation and set its coordiate, title, and subtitle properties
-                    
                     let annotation = MKPointAnnotation()
                     annotation.coordinate = coordinate
                     // Finally we place the annotation in an array of annotations.
@@ -94,7 +122,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         let bikePointDetailViewController = segue.destination as? BikePointDetailViewController else {return}
         bikePointDetailViewController.pin = self.pin
         bikePointDetailViewController.currentBikePoint = selectedBikePoint
-        print("Selected bike point: \(selectedBikePoint.id)")
+        print("Selected bike point: \(String(describing: selectedBikePoint))")
     }
     
     // Delegate method to perform a segue when tapped on a pin
@@ -114,18 +142,8 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
 
     // MARK: Helper Methods
-    private func handleTFLResponse(response: TFLResponse?, error: Error?) {
-        guard let error = error else {
-            print("downloaded locations: \(response!.count)")
-            BikeBayModel.feedTheModel(response)
-            return
-        }
-        print(error)
-        // TODO: Show Error Message
-    }
-    
     fileprivate func findBikePoint(_ pin: MKAnnotation) {
-        for bikePoint in BikeBayModel.bikeBays {
+        for bikePoint in fetchedResultsController.fetchedObjects! {
             if bikePoint.lon == pin.coordinate.longitude && bikePoint.lat == pin.coordinate.latitude {
                 selectedBikePoint = bikePoint
             }

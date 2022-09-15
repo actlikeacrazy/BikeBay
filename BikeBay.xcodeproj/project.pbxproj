@@ -11,8 +11,9 @@
 		D807B32328D1217D00D437B9 /* TableListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D807B32228D1217D00D437B9 /* TableListCell.swift */; };
 		D807B32528D125A200D437B9 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = D807B32428D125A200D437B9 /* Services.swift */; };
 		D807B32728D2506100D437B9 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D807B32628D2506100D437B9 /* DataController.swift */; };
+		D807B32B28D3B8AD00D437B9 /* BatchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D807B32A28D3B8AD00D437B9 /* BatchRequest.swift */; };
+		D807B32D28D3CBF800D437B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D807B32C28D3CBF800D437B9 /* SceneDelegate.swift */; };
 		D82CBB2F28AEBCA000D4E941 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB2E28AEBCA000D4E941 /* AppDelegate.swift */; };
-		D82CBB3128AEBCA100D4E941 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB3028AEBCA100D4E941 /* SceneDelegate.swift */; };
 		D82CBB3328AEBCA100D4E941 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */; };
 		D82CBB3628AEBCA100D4E941 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82CBB3428AEBCA100D4E941 /* Main.storyboard */; };
 		D82CBB3928AEBCA100D4E941 /* BikeBay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB3728AEBCA100D4E941 /* BikeBay.xcdatamodeld */; };
@@ -33,9 +34,10 @@
 		D807B32228D1217D00D437B9 /* TableListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableListCell.swift; sourceTree = "<group>"; };
 		D807B32428D125A200D437B9 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		D807B32628D2506100D437B9 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		D807B32A28D3B8AD00D437B9 /* BatchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchRequest.swift; sourceTree = "<group>"; };
+		D807B32C28D3CBF800D437B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D82CBB2B28AEBCA000D4E941 /* BikeBay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BikeBay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82CBB2E28AEBCA000D4E941 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D82CBB3028AEBCA100D4E941 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		D82CBB3528AEBCA100D4E941 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D82CBB3828AEBCA100D4E941 /* BikeBay.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BikeBay.xcdatamodel; sourceTree = "<group>"; };
@@ -83,7 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				D82CBB2E28AEBCA000D4E941 /* AppDelegate.swift */,
-				D82CBB3028AEBCA100D4E941 /* SceneDelegate.swift */,
+				D807B32C28D3CBF800D437B9 /* SceneDelegate.swift */,
 				D82CBB4728AEBF0700D4E941 /* Model */,
 				D82CBB4628AEBED000D4E941 /* View */,
 				D82CBB4528AEBEB700D4E941 /* Controller */,
@@ -140,6 +142,7 @@
 			children = (
 				D82CBB3728AEBCA100D4E941 /* BikeBay.xcdatamodeld */,
 				D807B32628D2506100D437B9 /* DataController.swift */,
+				D807B32A28D3B8AD00D437B9 /* BatchRequest.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -230,10 +233,11 @@
 				D807B32128D11EB400D437B9 /* FavouriteListViewController.swift in Sources */,
 				D82CBB2F28AEBCA000D4E941 /* AppDelegate.swift in Sources */,
 				D807B32328D1217D00D437B9 /* TableListCell.swift in Sources */,
-				D82CBB3128AEBCA100D4E941 /* SceneDelegate.swift in Sources */,
 				D82CBB4C28B6AE6600D4E941 /* TFLClient.swift in Sources */,
 				D82CBB5028B6BB8B00D4E941 /* BikeBayModel.swift in Sources */,
+				D807B32D28D3CBF800D437B9 /* SceneDelegate.swift in Sources */,
 				D8A6977928BFF768007E5BF8 /* BikeCell.swift in Sources */,
+				D807B32B28D3B8AD00D437B9 /* BatchRequest.swift in Sources */,
 				D830425628C73A0200D32A99 /* CollectionViewHeader.swift in Sources */,
 				D807B32528D125A200D437B9 /* Services.swift in Sources */,
 				D82CBB3928AEBCA100D4E941 /* BikeBay.xcdatamodeld in Sources */,

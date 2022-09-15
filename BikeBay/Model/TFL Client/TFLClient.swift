@@ -44,7 +44,6 @@ class TFLClient {
             let decoder = JSONDecoder()
             do {
                 let responseObject = try decoder.decode(responseType, from: data)
-                print("responseObject: \(responseObject)")
                 completion(responseObject, nil)
             } catch {
                 do {

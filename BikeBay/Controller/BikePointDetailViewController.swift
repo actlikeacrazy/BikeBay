@@ -7,27 +7,31 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
-    
+    @IBOutlet weak var favourite: UISwitch!
     
     // MARK: Properties
     var pin: MKAnnotation!
     var currentBikePoint: BikeBay!
     
     // MARK: Actions
+    @IBAction func switchPressed(_ sender: Any) {
+        currentBikePoint.favourite.toggle()
+        print(currentBikePoint.favourite)
+    }
     
     // MARK: Life Cycle
-    
     override func viewWillAppear(_ animated: Bool) {
         flowLayout.minimumLineSpacing = 5
         flowLayout.sectionHeadersPinToVisibleBounds = true
         flowLayout.itemSize = CGSize(width: 60, height: 60)
-
+        self.favourite.isOn = currentBikePoint.favourite
     }
 
     override func viewDidLoad() {
@@ -68,7 +72,7 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
 extension BikePointDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return currentBikePoint.numberOfBays
+        return Int(currentBikePoint.numberOfBays)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -84,7 +88,7 @@ extension BikePointDetailViewController: UICollectionViewDataSource, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? CollectionViewHeader {
-            sectionHeader.headerLabel.text = "\(currentBikePoint.commonName)"
+            sectionHeader.headerLabel.text = "\(currentBikePoint.commonName!)"
             sectionHeader.subHeader.text = "\(currentBikePoint.numberOfBikes) bikes available out of \(currentBikePoint.numberOfBays) bays"
             return sectionHeader
         }

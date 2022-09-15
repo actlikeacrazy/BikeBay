@@ -6,16 +6,36 @@
 //
 
 import UIKit
+import CoreData
 
-class FavouriteListViewController: UIViewController, UITableViewDataSource {
+class FavouriteListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
-    // MARK: Properties
+    // MARK: Data Controller set up
+    var dataController:DataController!
     
-    let model = BikeBayModel.bikeBays
+    var fetchedResultsController:NSFetchedResultsController<BikeBay>!
+    
+    fileprivate func setupFetchedResultsController() {
+        let fetchRequest:NSFetchRequest<BikeBay> = BikeBay.fetchRequest()
+        let predicate = NSPredicate(format: "favourite == %@", true)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "bikebays")
+        fetchedResultsController.delegate = self
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("The fetch could not be performed: \(error.localizedDescription)")
+        }
+    }
+    
+   
     
     // MARK: Life cycle
     override func viewWillAppear(_ animated: Bool) {
-        
+        setupFetchedResultsController()
     }
     
     override func viewDidLoad() {
@@ -27,12 +47,13 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource {
     // MARK:  Table View Delegate methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let model = fetchedResultsController.fetchedObjects else {return TabelListCell()}
         
-        let station = BikeBayModel.bikeBays[indexPath.row]
+        let station = model[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableListCell", for: indexPath) as! TabelListCell
         
@@ -41,7 +62,6 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource {
         cell.detailLabel.text = "Available bikes: \(station.numberOfBikes)"
         
         return cell
-        
     }
 
 }
