@@ -60,7 +60,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        //fetchedResultsController = nil
+        fetchedResultsController = nil
     }
     
     // MARK: - MKMapview Delegate Methods

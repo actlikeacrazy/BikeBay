@@ -8,7 +8,12 @@
 import UIKit
 import CoreData
 
-class FavouriteListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class FavouriteListViewController: UIViewController, UITableViewDataSource, NSFetchedResultsControllerDelegate, UITableViewDelegate {
+    
+    // MARK: Outlet
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     
     // MARK: Data Controller set up
     var dataController:DataController!
@@ -34,6 +39,7 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
     // MARK: Life cycle
     override func viewWillAppear(_ animated: Bool) {
         setupFetchedResultsController()
+        self.tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -41,6 +47,8 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
         navigationController?.isNavigationBarHidden = false
         let tabBarController = tabBarController as! TabBarViewController
         dataController = tabBarController.dataController
+        self.tableView.delegate = self
+        
         // Do any additional setup after loading the view.
     }
     
@@ -69,4 +77,17 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
         return cell
     }
 
+}
+
+extension FavouriteListViewController {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    
 }
