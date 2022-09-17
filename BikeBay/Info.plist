@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>User location is required to show users location on the map next to available bike bays</string>
+	<string>User location is required for $(PRODUCT_NAME) to show users location on the map next to available bike bays</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
