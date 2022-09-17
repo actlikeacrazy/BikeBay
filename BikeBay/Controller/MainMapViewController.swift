@@ -40,7 +40,6 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     
-    
     // MARK: Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,12 +53,14 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        let tabBarController = tabBarController as! TabBarViewController
+        dataController = tabBarController.dataController
         // Do any additional setup after loading the view.
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        fetchedResultsController = nil
+        //fetchedResultsController = nil
     }
     
     // MARK: - MKMapview Delegate Methods
@@ -85,11 +86,14 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     func downloadPins() {
-        TFLClient.downloadingBikePoints { response, error in
+        TFLClient.downloadingBikePoints { [self] response, error in
             guard let error = error else {
                 print("downloaded locations: \(response!.count)")
-                self.dataController.batchInsertTFLData(response!)
-                
+                if fetchedResultsController.fetchedObjects!.isEmpty {
+                    dataController.batchInsertTFLData(response!)
+                } else {
+                    dataController.batchUpdate(response!)
+                }
                 // Annotations
                 var annotations = [MKPointAnnotation]()
                 //print("There are \(BikeBayModel.bikeBays.count) locations in the model")
@@ -122,6 +126,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         let bikePointDetailViewController = segue.destination as? BikePointDetailViewController else {return}
         bikePointDetailViewController.pin = self.pin
         bikePointDetailViewController.currentBikePoint = selectedBikePoint
+        bikePointDetailViewController.dataController = dataController
         print("Selected bike point: \(String(describing: selectedBikePoint))")
     }
     

@@ -19,11 +19,13 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     // MARK: Properties
     var pin: MKAnnotation!
     var currentBikePoint: BikeBay!
+    var dataController:DataController!
     
     // MARK: Actions
     @IBAction func switchPressed(_ sender: Any) {
         currentBikePoint.favourite.toggle()
         print(currentBikePoint.favourite)
+        saveContext()
     }
     
     // MARK: Life Cycle
@@ -39,6 +41,11 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         print(pin.coordinate)
         createPinForMap(annotation: pin)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        saveContext()
     }
     
     // MARK: - MKMapview Delegate Methods

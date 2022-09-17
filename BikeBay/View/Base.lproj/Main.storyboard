@@ -140,10 +140,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5q3-no-CjU">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="259"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="210"/>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6uN-fB-r4E">
-                                <rect key="frame" x="20" y="267" width="350" height="626"/>
+                                <rect key="frame" x="20" y="218" width="350" height="626"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SBp-uq-rXS">
                                     <size key="itemSize" width="128" height="128"/>
@@ -271,10 +271,10 @@
             </objects>
             <point key="canvasLocation" x="1148" y="-191"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="x5h-eC-8Ax">
             <objects>
-                <tabBarController id="vKu-WX-eEP" sceneMemberID="viewController">
+                <tabBarController id="vKu-WX-eEP" customClass="TabBarViewController" customModule="BikeBay" customModuleProvider="target" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OXO-Pw-nxH">
@@ -294,7 +294,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="esx-kZ-569"/>
+        <segue reference="mWk-CV-XjE"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="map" catalog="system" width="128" height="112"/>

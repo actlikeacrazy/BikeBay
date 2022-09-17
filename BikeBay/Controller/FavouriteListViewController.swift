@@ -39,7 +39,14 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = false
+        let tabBarController = tabBarController as! TabBarViewController
+        dataController = tabBarController.dataController
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        fetchedResultsController = nil
     }
     
     // MARK:  Table View Delegate methods

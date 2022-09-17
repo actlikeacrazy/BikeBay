@@ -43,10 +43,41 @@ extension DataController {
             do {
                 try context.execute(batchInsert)
             } catch {
-                // log any errors
+                fatalError("Failed to execute request: \(error)")
             }
         }
     }
+    
+    func batchUpdate(_ TFLResponseData: TFLResponse) {
+        // 1
+        guard !TFLResponseData.isEmpty else { return }
+        
+        // 2
+        persistentContainer.performBackgroundTask { context in
+            // 3
+            let batchUpdate = self.batchUpdateRequest(TFLResponseData: TFLResponseData)
+            do {
+                let result = try context.execute(batchUpdate) as? NSBatchUpdateResult
+                let objectIDArray = result?.result as? [NSManagedObjectID]
+                let changes = [NSUpdatedObjectsKey : objectIDArray]
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes as [AnyHashable : Any], into: [context])
+            } catch {
+                fatalError("Failed to execute request: \(error)")
+            }
+        }
+    }
+    
+    func batchUpdateRequest(TFLResponseData: TFLResponse) -> NSBatchUpdateRequest {
+        let batchUpdate = NSBatchUpdateRequest(entity: BikeBay.entity())
+        for object in TFLResponseData {
+            let predicate = NSPredicate(format: "id == %@", object.id)
+            batchUpdate.predicate = predicate
+            batchUpdate.propertiesToUpdate = ["numberOfBays" : Int64(numberOfBays(additionalProperties: object.additionalProperties)),"numberOfBikes" : Int64(numberOfBikes(additionalProperties: object.additionalProperties))]
+        }
+        batchUpdate.resultType = .updatedObjectIDsResultType
+        return batchUpdate
+    }
+    
     
     
 }

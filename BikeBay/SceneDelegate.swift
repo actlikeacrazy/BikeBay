@@ -20,13 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         dataController.load()
         
-        if let tabBarController = window?.rootViewController as? UITabBarController,
-           let navigationViewController = tabBarController.viewControllers?.first as? UINavigationController,
-           let mainMapViewController = navigationViewController.viewControllers.first as? MainMapViewController {
-            mainMapViewController.dataController = dataController
+        if let tabBarController = window?.rootViewController as? TabBarViewController {
+            tabBarController.dataController = dataController
         }
         guard let _ = (scene as? UIWindowScene) else { return }
-        
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
