@@ -17,7 +17,7 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
     
     fileprivate func setupFetchedResultsController() {
         let fetchRequest:NSFetchRequest<BikeBay> = BikeBay.fetchRequest()
-        let predicate = NSPredicate(format: "favourite == %@", true)
+        let predicate = NSPredicate(format: "favourite == YES")
         fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -30,8 +30,6 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, UITa
             fatalError("The fetch could not be performed: \(error.localizedDescription)")
         }
     }
-    
-   
     
     // MARK: Life cycle
     override func viewWillAppear(_ animated: Bool) {
