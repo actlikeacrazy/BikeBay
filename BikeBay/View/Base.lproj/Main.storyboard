@@ -185,7 +185,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="4sb-D2-USw">
-                                            <rect key="frame" x="8" y="8" width="334" height="58"/>
+                                            <rect key="frame" x="8" y="8" width="284" height="58"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQa-DA-Tk2">
                                                     <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="28.333333333333332"/>
@@ -201,14 +201,29 @@
                                                 </label>
                                             </subviews>
                                         </stackView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F58-a7-HE9">
+                                            <rect key="frame" x="297" y="8" width="51" height="58"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain">
+                                                <imageReference key="image" image="star" catalog="system" symbolScale="large" variableValue="0.80000000000000004"/>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="favouriteButtonPressed:" destination="ogn-hK-1fg" eventType="touchUpInside" id="Zkg-YD-OH0"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="4sb-D2-USw" secondAttribute="trailing" id="53F-je-g1J"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="4sb-D2-USw" secondAttribute="trailing" constant="50" id="53F-je-g1J"/>
+                                        <constraint firstItem="F58-a7-HE9" firstAttribute="top" secondItem="Toy-vj-6Ww" secondAttribute="topMargin" id="7l5-uu-H1u"/>
+                                        <constraint firstItem="F58-a7-HE9" firstAttribute="leading" secondItem="Toy-vj-6Ww" secondAttribute="leadingMargin" constant="289" id="8L5-yF-zbf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="F58-a7-HE9" secondAttribute="bottom" id="Fcz-BI-aHs"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="4sb-D2-USw" secondAttribute="bottom" id="S92-Y5-FRQ"/>
                                         <constraint firstItem="4sb-D2-USw" firstAttribute="leading" secondItem="Toy-vj-6Ww" secondAttribute="leadingMargin" id="bej-s3-j4c"/>
                                         <constraint firstItem="4sb-D2-USw" firstAttribute="top" secondItem="Toy-vj-6Ww" secondAttribute="topMargin" id="q9r-XR-RyY"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="F58-a7-HE9" secondAttribute="trailing" constant="-6" id="rKZ-vw-Gyd"/>
                                     </constraints>
                                     <connections>
+                                        <outlet property="favouriteButton" destination="F58-a7-HE9" id="gXB-OS-RiV"/>
                                         <outlet property="headerLabel" destination="gQa-DA-Tk2" id="npz-Xj-N0M"/>
                                         <outlet property="subHeader" destination="TCw-CS-Heq" id="Eyd-Cj-zkY"/>
                                     </connections>
@@ -232,19 +247,8 @@
                             <constraint firstItem="6uN-fB-r4E" firstAttribute="top" secondItem="5q3-no-CjU" secondAttribute="bottom" constant="8" symbolic="YES" id="lfj-SC-z13"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="s5U-Ij-Lio">
-                        <barButtonItem key="rightBarButtonItem" id="gRk-yn-FHl">
-                            <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Subscribed" id="Mu4-1M-ES0">
-                                <rect key="frame" x="323" y="6.6666666666666679" width="51" height="31.000000000000004"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="switchPressed:" destination="ogn-hK-1fg" eventType="valueChanged" id="oZu-x3-quv"/>
-                                </connections>
-                            </switch>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="s5U-Ij-Lio"/>
                     <connections>
-                        <outlet property="favourite" destination="Mu4-1M-ES0" id="yt2-TY-cYl"/>
                         <outlet property="flowLayout" destination="SBp-uq-rXS" id="2QW-iJ-ZXz"/>
                         <outlet property="mapView" destination="5q3-no-CjU" id="Tbu-z2-Fd8"/>
                     </connections>

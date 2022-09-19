@@ -14,26 +14,24 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
-    @IBOutlet weak var favourite: UISwitch!
+    
     
     // MARK: Properties
     var pin: MKAnnotation!
     var currentBikePoint: BikeBay!
     var dataController:DataController!
+    var selected:Bool!
     
     // MARK: Actions
-    @IBAction func switchPressed(_ sender: Any) {
+    @IBAction func favouriteButtonPressed(_ sender: Any) {
         currentBikePoint.favourite.toggle()
-        print(currentBikePoint.favourite)
         saveContext()
     }
-    
     // MARK: Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         flowLayout.minimumLineSpacing = 5
         flowLayout.sectionHeadersPinToVisibleBounds = true
         flowLayout.itemSize = CGSize(width: 60, height: 60)
-        self.favourite.isOn = currentBikePoint.favourite
     }
 
     override func viewDidLoad() {
@@ -97,6 +95,9 @@ extension BikePointDetailViewController: UICollectionViewDataSource, UICollectio
         if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? CollectionViewHeader {
             sectionHeader.headerLabel.text = "\(currentBikePoint.commonName!)"
             sectionHeader.subHeader.text = "\(currentBikePoint.numberOfBikes) bikes available out of \(currentBikePoint.numberOfBays) bays"
+            sectionHeader.favouriteButton.isSelected = currentBikePoint.favourite
+            sectionHeader.favouriteButton.setImage(UIImage(systemName: "star"), for: .normal)
+            sectionHeader.favouriteButton.setImage(UIImage(systemName: "star.fill"), for: .selected)
             return sectionHeader
         }
         return UICollectionReusableView()

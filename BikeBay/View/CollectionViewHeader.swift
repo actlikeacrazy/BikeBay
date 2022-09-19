@@ -13,6 +13,7 @@ class CollectionViewHeader: UICollectionReusableView {
     // MARK: Outlets
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var subHeader: UILabel!
+    @IBOutlet weak var favouriteButton: UIButton!
     
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {

@@ -43,11 +43,10 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     // MARK: Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupFetchedResultsController()
         self.mapView.showsUserLocation = true
         downloadPins()
-        tabBarSetUp()
-        mapView.setUserTrackingMode(.follow, animated: true)
-        setupFetchedResultsController()
     }
 
     override func viewDidLoad() {
@@ -55,12 +54,15 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         mapView.delegate = self
         let tabBarController = tabBarController as! TabBarViewController
         dataController = tabBarController.dataController
+        tabBarSetUp()
+        mapView.setUserTrackingMode(.follow, animated: true)
         // Do any additional setup after loading the view.
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         fetchedResultsController = nil
+        mapView.setUserTrackingMode(.none, animated: true)
     }
     
     // MARK: - MKMapview Delegate Methods
@@ -86,10 +88,12 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     func downloadPins() {
+        self.mapView.removeAnnotations(mapView.annotations)
         TFLClient.downloadingBikePoints { [self] response, error in
             guard let error = error else {
                 print("downloaded locations: \(response!.count)")
                 if fetchedResultsController.fetchedObjects!.isEmpty {
+                    print("Is storage empty: \(fetchedResultsController.fetchedObjects!.isEmpty)")
                     dataController.batchInsertTFLData(response!)
                 } else {
                     dataController.batchUpdate(response!)
@@ -112,13 +116,21 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 }
                 // When the array is complete, we add the annotations to the map.
                 self.mapView.addAnnotations(annotations)
-                
                 return
             }
             Swift.print(error)
-            // TODO: Show Error Message
+            // Present an Alert with error
+            let alert = UIAlertController(title: "Try Again", message: "Something went wrong downloading Bike Locations, please try again later!", preferredStyle: .actionSheet)
+            // Create actions
+            let tryAgainAction = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] action in
+                self!.manuallyTrigerDownload()
+            }
+            alert.addAction(tryAgainAction)
         }
     }
+    
+    
+    
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -134,7 +146,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         self.mapView.setUserTrackingMode(.none, animated: true)
         if view.annotation is MKUserLocation {
-            
+           // do nothing
         } else {
             for pin in mapView.annotations {
                 if pin.coordinate.latitude == view.annotation?.coordinate.latitude && pin.coordinate.longitude == view.annotation?.coordinate.longitude {
@@ -164,6 +176,20 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         self.tabBarController?.tabBar.insertSubview(blurView, at: 0)
         self.edgesForExtendedLayout = .bottom
         self.extendedLayoutIncludesOpaqueBars = true
+    }
+    
+    fileprivate func manuallyTrigerDownload() {
+        TFLClient.downloadingBikePoints { [self] response, error in
+            guard let error = error else {
+                if self.fetchedResultsController.fetchedObjects!.isEmpty {
+                    self.dataController.batchInsertTFLData(response!)
+                } else {
+                    self.dataController.batchUpdate(response!)
+                }
+                return
+            }
+            print(error)
+        }
     }
     
 }

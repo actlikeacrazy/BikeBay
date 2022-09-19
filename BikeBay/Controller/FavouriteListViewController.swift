@@ -4,14 +4,14 @@
 //
 //  Created by Aleksandrs Trubacs on 13/09/2022.
 //
-
+import Foundation
 import UIKit
 import CoreData
+import MapKit
 
 class FavouriteListViewController: UIViewController, UITableViewDataSource, NSFetchedResultsControllerDelegate, UITableViewDelegate {
     
-    // MARK: Outlet
-    
+    // MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
     
     
@@ -48,8 +48,6 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, NSFe
         let tabBarController = tabBarController as! TabBarViewController
         dataController = tabBarController.dataController
         self.tableView.delegate = self
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -76,11 +74,38 @@ class FavouriteListViewController: UIViewController, UITableViewDataSource, NSFe
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "fromTableToDetail", sender: self)
+    }
+    
+    //MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromTableToDetail",
+           let vc = segue.destination as? BikePointDetailViewController,
+           let indexPath = tableView.indexPathForSelectedRow {
+            vc.dataController = dataController
+            vc.currentBikePoint = fetchedResultsController.object(at: indexPath)
+            vc.pin = addAnnotation(fetchedResultsController.object(at: indexPath))
+        }
+    }
+    
 
 }
 
 extension FavouriteListViewController {
+    //MARK: Helper Methods
     
+    func addAnnotation(_ bikeBay: BikeBay) -> MKAnnotation {
+        let lat = CLLocationDegrees(bikeBay.lat)
+        let long = CLLocationDegrees(bikeBay.lon)
+        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        return annotation
+    }
+        
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
