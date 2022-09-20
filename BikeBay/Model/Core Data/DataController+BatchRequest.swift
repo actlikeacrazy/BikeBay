@@ -51,6 +51,7 @@ extension DataController {
     func batchUpdate(_ TFLResponseData: TFLResponse) {
         // 1
         guard !TFLResponseData.isEmpty else { return }
+        
         // 2
         persistentContainer.performBackgroundTask { context in
             // 3

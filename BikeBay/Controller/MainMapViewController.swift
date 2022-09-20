@@ -71,9 +71,9 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     // method in TableViewDataSource.
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
-        if annotation is MKUserLocation {
-               return nil
-           }
+        guard !annotation.isKind(of: MKUserLocation.self) else {
+            return nil
+        }
         if let pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView {
             pinView.annotation = annotation
             return pinView
@@ -88,34 +88,17 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     func downloadPins() {
-        self.mapView.removeAnnotations(mapView.annotations)
         TFLClient.downloadingBikePoints { [self] response, error in
             guard let error = error else {
                 print("downloaded locations: \(response!.count)")
-                if fetchedResultsController.fetchedObjects!.isEmpty {
+                if fetchedResultsController.fetchedObjects!.isEmpty || mapView.annotations.isEmpty {
                     print("Is storage empty: \(fetchedResultsController.fetchedObjects!.isEmpty)")
                     dataController.batchInsertTFLData(response!)
+                    
                 } else {
                     dataController.batchUpdate(response!)
                 }
-                // Annotations
-                var annotations = [MKPointAnnotation]()
-                //print("There are \(BikeBayModel.bikeBays.count) locations in the model")
-                for dictionary in self.fetchedResultsController.fetchedObjects! {
-                    // Notice that the float values are being used to create CLLocationDegree values.
-                    // This is a version of the Double type.
-                    let lat = CLLocationDegrees(dictionary.lat)
-                    let long = CLLocationDegrees(dictionary.lon)
-                    // The lat and long are used to create a CLLocationCoordinates2D instance.
-                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                    // Here we create the annotation and set its coordiate, title, and subtitle properties
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    // Finally we place the annotation in an array of annotations.
-                    annotations.append(annotation)
-                }
-                // When the array is complete, we add the annotations to the map.
-                self.mapView.addAnnotations(annotations)
+                addAnnotations()
                 return
             }
             Swift.print(error)
@@ -147,11 +130,11 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         self.mapView.setUserTrackingMode(.none, animated: true)
         if view.annotation is MKUserLocation {
            // do nothing
+            return
         } else {
             for pin in mapView.annotations {
                 if pin.coordinate.latitude == view.annotation?.coordinate.latitude && pin.coordinate.longitude == view.annotation?.coordinate.longitude {
                     findBikePoint(pin)
-                    self.pin = pin
                 }
             }
             performSegue(withIdentifier: "fromMapToDetail", sender: self)
@@ -162,7 +145,8 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     fileprivate func findBikePoint(_ pin: MKAnnotation) {
         for bikePoint in fetchedResultsController.fetchedObjects! {
             if bikePoint.lon == pin.coordinate.longitude && bikePoint.lat == pin.coordinate.latitude {
-                selectedBikePoint = bikePoint
+                self.selectedBikePoint = bikePoint
+                self.pin = pin
             }
         }
     }
@@ -178,6 +162,26 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         self.extendedLayoutIncludesOpaqueBars = true
     }
     
+    fileprivate func addAnnotations() {
+        // Annotations
+        var annotations = [MKPointAnnotation]()
+        for dictionary in self.fetchedResultsController.fetchedObjects! {
+            // Notice that the float values are being used to create CLLocationDegree values.
+            // This is a version of the Double type.
+            let lat = CLLocationDegrees(dictionary.lat)
+            let long = CLLocationDegrees(dictionary.lon)
+            // The lat and long are used to create a CLLocationCoordinates2D instance.
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            // Here we create the annotation and set its coordiate, title, and subtitle properties
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            // Finally we place the annotation in an array of annotations.
+            annotations.append(annotation)
+        }
+        // When the array is complete, we add the annotations to the map.
+        self.mapView.addAnnotations(annotations)
+    }
+    
     fileprivate func manuallyTrigerDownload() {
         TFLClient.downloadingBikePoints { [self] response, error in
             guard let error = error else {
@@ -186,6 +190,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 } else {
                     self.dataController.batchUpdate(response!)
                 }
+                addAnnotations()
                 return
             }
             print(error)

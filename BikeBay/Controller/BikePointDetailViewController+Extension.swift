@@ -18,9 +18,31 @@ extension BikePointDetailViewController {
         } catch {
             print("viewContext save failed!")
         }
-        
-        
     }
-
+    
+    func addSaveNotificationObserver(_ collectionView:CollectionViewHeader) {
+        removeSaveNotificationObserver()
+        saveObserverToken = NotificationCenter.default.addObserver(forName: .NSManagedObjectContextObjectsDidChange, object: dataController?.viewContext, queue: nil, using: { notification in
+            self.handleSaveNotification(collectionView, notification: notification)
+        })
+    }
+    
+    func removeSaveNotificationObserver() {
+        if let token = saveObserverToken {
+            NotificationCenter.default.removeObserver(token)
+        }
+    }
+    
+    fileprivate func reloadData(_ collectionView: CollectionViewHeader) {
+        collectionView.favouriteButton.isSelected = self.currentBikePoint.favourite
+    }
+    
+    func handleSaveNotification(_ collectionView: CollectionViewHeader,notification:Notification) {
+        DispatchQueue.main.async {
+            self.reloadData(collectionView)
+        }
+    }
+    
+    
     
 }

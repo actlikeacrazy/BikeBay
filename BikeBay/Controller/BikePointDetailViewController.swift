@@ -20,7 +20,7 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     var pin: MKAnnotation!
     var currentBikePoint: BikeBay!
     var dataController:DataController!
-    var selected:Bool!
+    var saveObserverToken: Any?
     
     // MARK: Actions
     @IBAction func favouriteButtonPressed(_ sender: Any) {
@@ -44,6 +44,7 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         saveContext()
+        removeSaveNotificationObserver()
     }
     
     // MARK: - MKMapview Delegate Methods
@@ -98,6 +99,7 @@ extension BikePointDetailViewController: UICollectionViewDataSource, UICollectio
             sectionHeader.favouriteButton.isSelected = currentBikePoint.favourite
             sectionHeader.favouriteButton.setImage(UIImage(systemName: "star"), for: .normal)
             sectionHeader.favouriteButton.setImage(UIImage(systemName: "star.fill"), for: .selected)
+            addSaveNotificationObserver(sectionHeader)
             return sectionHeader
         }
         return UICollectionReusableView()
