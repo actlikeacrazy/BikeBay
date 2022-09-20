@@ -44,7 +44,7 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         saveContext()
-        removeSaveNotificationObserver()
+        //removeSaveNotificationObserver()
     }
     
     // MARK: - MKMapview Delegate Methods
@@ -99,6 +99,7 @@ extension BikePointDetailViewController: UICollectionViewDataSource, UICollectio
             sectionHeader.favouriteButton.isSelected = currentBikePoint.favourite
             sectionHeader.favouriteButton.setImage(UIImage(systemName: "star"), for: .normal)
             sectionHeader.favouriteButton.setImage(UIImage(systemName: "star.fill"), for: .selected)
+        
             addSaveNotificationObserver(sectionHeader)
             return sectionHeader
         }
