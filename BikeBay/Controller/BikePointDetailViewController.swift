@@ -44,7 +44,6 @@ class BikePointDetailViewController: UIViewController, MKMapViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         saveContext()
-        //removeSaveNotificationObserver()
     }
     
     // MARK: - MKMapview Delegate Methods

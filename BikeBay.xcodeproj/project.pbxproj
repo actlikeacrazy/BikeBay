@@ -15,6 +15,7 @@
 		D807B32D28D3CBF800D437B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D807B32C28D3CBF800D437B9 /* SceneDelegate.swift */; };
 		D807B32F28D5E38E00D437B9 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D807B32E28D5E38E00D437B9 /* TabBarViewController.swift */; };
 		D807B33728DA5ACF00D437B9 /* ReadMe.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D807B33628DA5ACF00D437B9 /* ReadMe.rtf */; };
+		D807B33928DB981800D437B9 /* ManualMapViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D807B33828DB981800D437B9 /* ManualMapViewController+Extension.swift */; };
 		D82CBB2F28AEBCA000D4E941 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB2E28AEBCA000D4E941 /* AppDelegate.swift */; };
 		D82CBB3328AEBCA100D4E941 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */; };
 		D82CBB3628AEBCA100D4E941 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82CBB3428AEBCA100D4E941 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 		D807B32C28D3CBF800D437B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D807B32E28D5E38E00D437B9 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		D807B33628DA5ACF00D437B9 /* ReadMe.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = ReadMe.rtf; path = BikeBay/Assets/ReadMe.rtf; sourceTree = SOURCE_ROOT; };
+		D807B33828DB981800D437B9 /* ManualMapViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManualMapViewController+Extension.swift"; sourceTree = "<group>"; };
 		D82CBB2B28AEBCA000D4E941 /* BikeBay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BikeBay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82CBB2E28AEBCA000D4E941 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			children = (
 				D807B32E28D5E38E00D437B9 /* TabBarViewController.swift */,
 				D82CBB3228AEBCA100D4E941 /* MainMapViewController.swift */,
+				D807B33828DB981800D437B9 /* ManualMapViewController+Extension.swift */,
 				D807B32028D11EB400D437B9 /* FavouriteListViewController.swift */,
 				D82CBB5328BE9FF100D4E941 /* BikePointDetailViewController.swift */,
 				D830425728C7E0D700D32A99 /* BikePointDetailViewController+Extension.swift */,
@@ -243,6 +246,7 @@
 				D8A6977928BFF768007E5BF8 /* BikeCell.swift in Sources */,
 				D807B32B28D3B8AD00D437B9 /* DataController+BatchRequest.swift in Sources */,
 				D830425628C73A0200D32A99 /* CollectionViewHeader.swift in Sources */,
+				D807B33928DB981800D437B9 /* ManualMapViewController+Extension.swift in Sources */,
 				D807B32528D125A200D437B9 /* Services.swift in Sources */,
 				D82CBB3928AEBCA100D4E941 /* BikeBay.xcdatamodeld in Sources */,
 				D82CBB5628BEAE7800D4E941 /* TFLBikePointResponse.swift in Sources */,
@@ -400,12 +404,13 @@
 				DEVELOPMENT_TEAM = H2WYXEJN79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BikeBay/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "User location is required for $(PRODUCT_NAME) to show users location on the map next to available bike bays";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -429,12 +434,13 @@
 				DEVELOPMENT_TEAM = H2WYXEJN79;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BikeBay/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "User location is required for $(PRODUCT_NAME) to show users location on the map next to available bike bays";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -13,6 +13,7 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: Actions
     
@@ -38,7 +39,6 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
             fatalError("The fetch could not be performed: \(error.localizedDescription)")
         }
     }
-    
     
     // MARK: Life Cycle
     
@@ -88,32 +88,36 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     }
     
     func downloadPins() {
+        isActivityIndicator(true)
+        mapView.removeAnnotations(mapView.annotations)
         TFLClient.downloadingBikePoints { [self] response, error in
-            guard let error = error else {
-                print("downloaded locations: \(response!.count)")
+            if let response = response {
+                print("downloaded locations: \(response.count)")
                 if fetchedResultsController.fetchedObjects!.isEmpty || mapView.annotations.isEmpty {
                     print("Is storage empty: \(fetchedResultsController.fetchedObjects!.isEmpty)")
-                    dataController.batchInsertTFLData(response!)
+                    dataController.batchInsertTFLData(response)
                     
                 } else {
-                    dataController.batchUpdate(response!)
+                    dataController.batchUpdate(response)
                 }
                 addAnnotations()
-                return
+                isActivityIndicator(false)
+            } else if let error = error {
+                Swift.print(error)
+                // Present an Alert with error
+                let alert = UIAlertController(title: "Try Again", message: "Something went wrong downloading Bike Locations, please try again later!", preferredStyle: .actionSheet)
+                // Create actions
+                let tryAgainAction = UIAlertAction(title: "Try again", style: .cancel) { [self] action in
+                    manuallyTrigerDownload()
+                }
+                alert.addAction(tryAgainAction)
+                DispatchQueue.main.sync {
+                    present(alert, animated: true)
+                }
             }
-            Swift.print(error)
-            // Present an Alert with error
-            let alert = UIAlertController(title: "Try Again", message: "Something went wrong downloading Bike Locations, please try again later!", preferredStyle: .actionSheet)
-            // Create actions
-            let tryAgainAction = UIAlertAction(title: "Cancel", style: .cancel) { [weak self] action in
-                self!.manuallyTrigerDownload()
-            }
-            alert.addAction(tryAgainAction)
         }
+        
     }
-    
-    
-    
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -141,61 +145,5 @@ class MainMapViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         }
     }
 
-    // MARK: Helper Methods
-    fileprivate func findBikePoint(_ pin: MKAnnotation) {
-        for bikePoint in fetchedResultsController.fetchedObjects! {
-            if bikePoint.lon == pin.coordinate.longitude && bikePoint.lat == pin.coordinate.latitude {
-                self.selectedBikePoint = bikePoint
-                self.pin = pin
-            }
-        }
-    }
-    
-    func tabBarSetUp() {
-        self.tabBarController?.tabBar.isTranslucent = true
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = self.tabBarController?.tabBar.bounds ?? CGRect(x: 0, y: 0, width: 0, height: 0)
-        blurView.autoresizingMask = .flexibleWidth
-        self.tabBarController?.tabBar.insertSubview(blurView, at: 0)
-        self.edgesForExtendedLayout = .bottom
-        self.extendedLayoutIncludesOpaqueBars = true
-    }
-    
-    fileprivate func addAnnotations() {
-        // Annotations
-        var annotations = [MKPointAnnotation]()
-        for dictionary in self.fetchedResultsController.fetchedObjects! {
-            // Notice that the float values are being used to create CLLocationDegree values.
-            // This is a version of the Double type.
-            let lat = CLLocationDegrees(dictionary.lat)
-            let long = CLLocationDegrees(dictionary.lon)
-            // The lat and long are used to create a CLLocationCoordinates2D instance.
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            // Here we create the annotation and set its coordiate, title, and subtitle properties
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            // Finally we place the annotation in an array of annotations.
-            annotations.append(annotation)
-        }
-        // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
-    }
-    
-    fileprivate func manuallyTrigerDownload() {
-        TFLClient.downloadingBikePoints { [self] response, error in
-            guard let error = error else {
-                if self.fetchedResultsController.fetchedObjects!.isEmpty {
-                    self.dataController.batchInsertTFLData(response!)
-                } else {
-                    self.dataController.batchUpdate(response!)
-                }
-                addAnnotations()
-                return
-            }
-            print(error)
-        }
-    }
-    
 }
 

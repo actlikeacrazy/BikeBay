@@ -109,14 +109,19 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eBZ-Vf-Q5g">
                                 <rect key="frame" x="0.0" y="3" width="390" height="841"/>
                             </mapView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="mSj-Tp-UrX">
+                                <rect key="frame" x="185" y="412" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qHH-fI-Ap1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="mSj-Tp-UrX" firstAttribute="centerX" secondItem="wjJ-8A-Osj" secondAttribute="centerX" id="YLh-fK-PrU"/>
                             <constraint firstItem="qHH-fI-Ap1" firstAttribute="trailing" secondItem="eBZ-Vf-Q5g" secondAttribute="trailing" id="a0H-qD-4dW"/>
                             <constraint firstItem="qHH-fI-Ap1" firstAttribute="bottom" secondItem="eBZ-Vf-Q5g" secondAttribute="bottom" constant="-132" id="fZg-72-8pH"/>
                             <constraint firstItem="eBZ-Vf-Q5g" firstAttribute="top" secondItem="qHH-fI-Ap1" secondAttribute="top" constant="-88" id="gdF-TG-GnQ"/>
                             <constraint firstItem="eBZ-Vf-Q5g" firstAttribute="leading" secondItem="qHH-fI-Ap1" secondAttribute="leading" id="k3G-hq-yao"/>
+                            <constraint firstItem="mSj-Tp-UrX" firstAttribute="centerY" secondItem="wjJ-8A-Osj" secondAttribute="centerY" id="zUX-k2-vlV"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map View" selectedImage="map.fill" catalog="system" id="PoM-1v-PFM">
@@ -124,6 +129,7 @@
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="LCO-Eb-1Ff"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="mSj-Tp-UrX" id="tyZ-tT-Xxg"/>
                         <outlet property="mapView" destination="eBZ-Vf-Q5g" id="vKD-Uy-ES0"/>
                         <segue destination="ogn-hK-1fg" kind="show" identifier="fromMapToDetail" id="mWk-CV-XjE"/>
                     </connections>
@@ -141,10 +147,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5q3-no-CjU">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="259"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="210"/>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6uN-fB-r4E">
-                                <rect key="frame" x="20" y="267" width="350" height="626"/>
+                                <rect key="frame" x="20" y="218" width="350" height="626"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SBp-uq-rXS">
                                     <size key="itemSize" width="128" height="128"/>
@@ -304,7 +310,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="esx-kZ-569"/>
+        <segue reference="mWk-CV-XjE"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="map" catalog="system" width="128" height="112"/>
